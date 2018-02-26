@@ -53,9 +53,34 @@ public class Converter {
             Iterator<String[]> iterator = full.iterator();
             
             JSONObject jsonObject = new JSONObject();
+            StringWriter writer = new StringWriter(); 
+            CSVWriter csvWriter = new CSVWriter(writer, ',', '"', '\n'); 
+            String[] cols = full.get(0);
             
-            // INSERT YOUR CODE HERE
+            JSONArray colHeaders = new JSONArray();
+            colHeaders.addAll(Arrays.asList(cols));
+            jsonObject.put("colHeaders", colHeaders);
+            ArrayList<String> rows = new ArrayList<>();
+            JSONArray rowHeaders = new JSONArray();
+            for(int i = 1; i < full.size(); i++){
+                rows.add(full.get(i)[0]);
+            }
+            rowHeaders.addAll(rows);
+            ArrayList<ArrayList<Integer>> allInfo = new ArrayList<>();
+            jsonObject.put("rowHeaders", rowHeaders);
             
+            //ArrayList<String[]> data = new ArrayList<>();
+            JSONArray dataInfo = new JSONArray();
+            for (int i = 1; i < rows.size(); i++){
+                ArrayList<Integer> rowData = new ArrayList<>();
+                for (int j = 1; j < full.size(); j++){
+                    rowData.add(Integer.parseInt(full.get(i)[j]));
+                }
+                allInfo.add(rowData);
+            }
+            dataInfo.addAll(allInfo);
+            jsonObject.put("data", dataInfo);
+            results = jsonObject.toString();
         }
         
         catch(IOException e) { return e.toString(); }
@@ -76,6 +101,36 @@ public class Converter {
             StringWriter writer = new StringWriter();
             CSVWriter csvWriter = new CSVWriter(writer, ',', '"', '\n');
             
+            /*JSONObject jsonObject = new JSONObject();
+            StringWriter writer = new StringWriter(); 
+            CSVWriter csvWriter = new CSVWriter(writer, ',', '"', '\n'); 
+            String[] cols = full.get(0);
+            
+            JSONArray colHeaders = new JSONArray();
+            colHeaders.addAll(Arrays.asList(cols));
+            jsonObject.put("colHeaders", colHeaders);
+            ArrayList<String> rows = new ArrayList<>();
+            JSONArray rowHeaders = new JSONArray();
+            for(int i = 1; i < full.size(); i++){
+                rows.add(full.get(i)[0]);
+            }
+            rowHeaders.addAll(rows);
+            ArrayList<ArrayList<Integer>> allInfo = new ArrayList<>();
+            jsonObject.put("rowHeaders", rowHeaders);
+            
+            //ArrayList<String[]> data = new ArrayList<>();
+            JSONArray dataInfo = new JSONArray();
+            for (int i = 1; i < rows.size(); i++){
+                ArrayList<Integer> rowData = new ArrayList<>();
+                for (int j = 1; j < full.size(); j++){
+                    rowData.add(Integer.parseInt(full.get(i)[j]));
+                }
+                allInfo.add(rowData);
+            }
+            dataInfo.addAll(allInfo);
+            jsonObject.put("data", dataInfo);
+            results = jsonObject.toString();
+        }*/
             // INSERT YOUR CODE HERE
             
         }
